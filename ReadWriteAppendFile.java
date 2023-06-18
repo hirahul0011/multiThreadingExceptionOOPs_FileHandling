@@ -1,6 +1,8 @@
 package multiThreadingExceptionOOPs_FileHandling;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -41,17 +43,64 @@ public class ReadWriteAppendFile {
 	    } 
 	    return lines; 
 	  }
+	
+	static void modifyFile(String filePath, String oldString, String newString)
+    {
+        File fileToBeModified = new File(filePath);
+        String oldContent = "";
+        BufferedReader reader = null;
+        FileWriter writer = null;
+        try
+        {
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+            String line = reader.readLine();
+            while (line != null) 
+            {
+                oldContent = oldContent + line + System.lineSeparator();
+                line = reader.readLine();
+            }
+            String newContent = oldContent.replaceAll(oldString, newString);
+            writer = new FileWriter(fileToBeModified);
+            writer.write(newContent);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+                writer.close();
+            } 
+            catch (IOException e) 
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		createFileUsingFileClass();
 		
-		List l = readFileInList("C:\\Users\\Lenovo\\Documents\\GIT\\FileHandling//fileHandling.txt"); 
-	    
 		System.out.println("Original Content in the File is:\n");
+		List l = readFileInList("C:\\Users\\Lenovo\\Documents\\GIT\\FileHandling//fileHandling.txt");	    
+		
 	    Iterator<String> itr = l.iterator(); 
 	    while (itr.hasNext()) 
 	      System.out.println(itr.next());
+	    
+	    modifyFile("C:\\Users\\Lenovo\\Documents\\GIT\\FileHandling\\fileHandling.txt", "Hello", "Hi");
+        System.out.println("\nContent in the File changed.\n");
+        
+        System.out.println("After the changes the Content in the File is:\n");
+		List l0 = readFileInList("C:\\Users\\Lenovo\\Documents\\GIT\\FileHandling//fileHandling.txt");	    
+		
+	    Iterator<String> itr0 = l0.iterator(); 
+	    while (itr0.hasNext()) 
+	      System.out.println(itr0.next());
 
 	}
 
