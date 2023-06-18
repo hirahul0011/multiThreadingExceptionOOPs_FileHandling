@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -101,6 +103,22 @@ public class ReadWriteAppendFile {
 	    Iterator<String> itr0 = l0.iterator(); 
 	    while (itr0.hasNext()) 
 	      System.out.println(itr0.next());
+	    
+	    List<String> lines = Arrays.asList("","Hope you are doing good!", "Thank you!");
+	       Files.write(Paths.get("C:\\Users\\Lenovo\\Documents\\GIT\\FileHandling\\fileHandling.txt"),
+	                    lines,
+	                    StandardCharsets.UTF_8,
+	                    StandardOpenOption.CREATE,
+	                    StandardOpenOption.APPEND);
+	    
+	    System.out.println("\nSome content is now appended in the File.\n");
+	    
+	    System.out.println("After the appending the Content in the File is:\n");
+		List l1 = readFileInList("C:\\Users\\Lenovo\\Documents\\GIT\\FileHandling//fileHandling.txt");	    
+		
+	    Iterator<String> itr1 = l1.iterator(); 
+	    while (itr1.hasNext()) 
+	      System.out.println(itr1.next());
 
 	}
 
